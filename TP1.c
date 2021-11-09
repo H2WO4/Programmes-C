@@ -7,14 +7,14 @@
 
 bool isPrime(int n)
 {
-    bool out = n % 2 != 0;
+    bool out = n % 2 != 0 || n == 2;
     for (int j = 3; j < sqrt(n) + 1 && out; j += 2)
         out = n % j != 0;
 
     return out;
 }
 
-int main()
+void ex1()
 {
     int n, i = 0, *pList;
     printf("Enter the upper bound: ");
@@ -37,6 +37,16 @@ int main()
     {
         printf("%d ", *e);
     }
+}
+
+int main()
+{
+    void (*p[1]) (void) = {ex1};
+    int a;
+    printf("Enter the desired exercise number: ");
+    scanf("%d", &a);
+    if (a > 0 && a <= 1)
+        (*p+a-1)();
 
     return 0;
 }

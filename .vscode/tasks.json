@@ -1,27 +1,21 @@
 {
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "C/C++: gcc.exe générer le fichier actif",
-            "command": "C:\\msys64\\mingw64\\bin\\gcc.exe",
-            "args": [
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\out\\${fileBasenameNoExtension}.exe"
-            ],
+            "type": "shell",
+            "label": "C/C++: gcc.exe générer et executer le fichier actif",
+            "command": "gcc -o 'out\\${fileBasenameNoExtension}.exe' '${fileBasename}' 'modules\\h2list.c'; out\\${fileBasenameNoExtension}.exe",
             "options": {
-                "cwd": "C:\\msys64\\mingw64\\bin"
+                "cwd": "c:\\Users\\arthu\\Documents\\GitHub\\Programmes-C"
             },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "detail": "Tâche générée par le débogueur."
-        }
+            }
+        },
     ],
     "version": "2.0.0"
 }
