@@ -17,11 +17,14 @@ struct List{
 
 void initList(struct List*);
 
-void append(struct List*, int, ...);
-
-void* getNFirst(struct List*, int);
-void* getNLast(struct List*, int);
-
 void push(struct List*, void*);
+void* pop(struct List*);
+
+void shift(struct List*, void*);
+void* unshift(struct List*, void*);
+
+void insertAt(struct List*, void*, int);
+void removeAt(struct List*, int);
+void* peekAt(struct List*, int);
 
 # endif
