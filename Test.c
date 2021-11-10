@@ -1,24 +1,16 @@
 # include <stdio.h>
+# include <stdlib.h>
 # include "modules\h2list.h"
 
 int main() {
-	struct List list;
-	initList(&list);
+	struct List *list = malloc(sizeof(struct List));
+	initList(list);
 
-	for (int i = 0; i < 5; i++) {
-		push(&list, i);
-	}
+	copyList(range(0, 10), list);
 
+	printf("The value is: ");
 	foreach (n, list) {
-		printf("The value is: %d\n", n->data);
-	}
-
-	printf("\nSupressing a value ...\n");
-
-	removeAt(&list, 3);
-
-	foreach (n, list) {
-		printf("The value is: %d\n", n->data);
+		printf("%d ", n->data);
 	}
 
 	return 0;

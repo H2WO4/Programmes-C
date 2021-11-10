@@ -1,4 +1,5 @@
 # include <stdlib.h>
+# include <stdarg.h>
 
 struct Node{
 	struct Node *next;
@@ -113,12 +114,20 @@ void* shift(struct List *list) {
 }
 
 
-void insertAt(struct List *list, void *data, int index) {
+void insertAt(struct List *list, int index, void *data) {
 	/* Insert a new node at the specified index */
 
 	// If the index is out of bounds, return NULL
-	if (index < -list->size || index > list->size-1) {
+	if (index < -list->size || index > list->size) {
 		return;
+	}
+	// Else, if the index is 0, call unshift
+	else if (index == 0) {
+		return unshift(list, data);
+	}
+	// Else, if the index is the size of the list, call push
+	else if (index == list->size) {
+		return push(list, data);
 	}
 
 	// Create a new node, and set its data
@@ -167,8 +176,16 @@ void removeAt(struct List *list, int index) {
 	/* Remove the node at the specified index */
 
 	// If the index is out of bounds, return NULL
-	if (index < -list->size || index > list->size-1) {
+	if (index < -list->size || index > list->size) {
 		return;
+	}
+	// Else, if the index is 0, call shift
+	else if (index == 0) {
+		return shift(list);
+	}
+	// Else, if the index is the size of the list, call pop
+	else if (index == list->size) {
+		return pop(list);
 	}
 
 	// If the index is positive, start from the head
@@ -237,4 +254,98 @@ void* peekAt(struct List *list, int index) {
 		// Return the data of the node
 		return current->data;
 	}
+}
+
+
+void emptyList(struct List *list) {
+	/* Empty the list */
+
+	// While the list is not empty, call shift
+	while (list->size > 0) {
+		shift(list);
+	}
+}
+
+void copyList(struct List *src, struct List *dest) {
+	/* Copy the contents of src to dest */
+
+	// Empty the dest list
+	emptyList(dest);
+
+	// If the src list is empty, return
+	if (src->size == 0) {
+		return;
+	}
+	
+	// Create a pointer to the src head
+	struct Node *current = src->head;
+
+	// While the current node is not NULL, add it to the dest list
+	while (current != NULL) {
+		push(dest, current->data);
+		current = current->next;
+	}
+}
+
+void strToList(struct List *list, char *str) {
+	/* Convert a string to a list */
+	
+	// Empty the list
+	emptyList(list);
+
+	// Create a pointer to the string
+	char *current = str;
+
+	// While the string is not empty, add the next character to the list
+	while (*current != '\0') {
+		push(list, *current);
+		current++;
+	}
+}
+
+void concatList(struct List *src, struct List *dest) {
+	/* Concatenate src to dest */
+
+	// If the src list is empty, return
+	if (src->size == 0) {
+		return;
+	}
+
+	// Create a pointer to the src head
+	struct Node *current = src->head;
+
+	// While the current node is not NULL, add it to the dest list
+	while (current != NULL) {
+		push(dest, current->data);
+		current = current->next;
+	}
+}
+
+
+struct List* range(int start, int end, ...) {
+	/* Create a list of numbers from start to end with step */
+
+	va_list args;
+	va_start(args, 1);
+	int step = va_arg(args, int);
+
+	// Create a new list
+	struct List *list = malloc(sizeof(struct List));
+	initList(list);
+
+	// If the start is greater than the end, return pointer to an empty list
+	if (start > end) {
+		return list;
+	}
+
+	// Add the numbers from start to end to the list
+	for (int i = start; i <= end; i++) {
+		push(list, i);
+	}
+
+	// Free the arguments
+	va_end(args);
+
+	// Return a pointer the list
+	return list;
 }
