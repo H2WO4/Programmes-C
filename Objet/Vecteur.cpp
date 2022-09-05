@@ -5,77 +5,77 @@
 
 using namespace std;
 
-vector<string> split(string input, char delimiter)
+vector<string> split(const string& input, char delimiter)
 {
-	stringstream input2(input);
-	vector<string> output;
-	string segment;
+    stringstream input2(input);
+    vector<string> output;
+    string segment;
 
-	while (getline(input2, segment, delimiter))
-		output.push_back(segment);
-	
-	
+    while (getline(input2, segment, delimiter))
+        output.push_back(segment);
 
-	return output;	
+    return output;
 }
 
 class Vector
 {
-	protected:
-		int n;
-		int values[200];
+protected:
+    int n;
+    int values[200]{ };
 
-	public:
-		// * Constructors
-		Vector() { this->n = 0; }
-		template<typename... Args>
-		Vector(Args ... args)
-		{
-			int values[] = { args ... };
-			this->n = sizeof(values)/sizeof(*values);
+public:
+    // Constructors
+    Vector()
+    { this->n = 0; }
 
-			for (int i = 0; i < this->n; i++)
-				this->values[i] = values[i];
-		}
+    template<typename... Args>
+    explicit Vector(Args ... args)
+    {
+        int temp_values[] = { args ... };
+        n = sizeof(temp_values) / sizeof(*temp_values);
 
-		// * Initialize
-		static Vector initialize()
-		{
-			Vector out = Vector();
+        for (int i = 0; i < this->n; i++)
+            values[i] = temp_values[i];
+    }
 
-			string input;
-			cin >> input;
-			vector<string> vals = split(input, ' ');
+    // Initialize
+    static Vector initialize()
+    {
+        Vector out = Vector();
 
-			out.n = vals.size();
-			for (int i = 0; i < out.n; i++)
-				cout << vals[i] << ' ';
+        string input;
+        cin >> input;
+        vector<string> vals = split(input, ' ');
 
-			for (int i = 0; i < out.n; i++)
-				out.values[i] = stoi(vals[i]);
+        out.n = vals.size();
+        for (int i = 0; i < out.n; i++)
+            cout << vals[i] << ' ';
 
-			return out;
-		}
+        for (int i = 0; i < out.n; i++)
+            out.values[i] = stoi(vals[i]);
 
-		// * Display
-		void display()
-		{
-			int i;
-			cout << '(';
-			for (i = 0; i < this->n - 1; i++)
-				cout << this->values[i] << ", ";
-			cout << this->values[i+1] << ')' << endl;
-		}
+        return out;
+    }
 
-		// * Operations
+    // Display
+    void display()
+    {
+        int i;
+        cout << '(' << values[0];
+        for (i = 1; i < this->n; i++)
+            cout << ", " << values[i];
+        cout << ')' << endl;
+    }
+
+    // Operations
 
 };
 
 int main()
 {
-	Vector a = Vector::initialize();
+    Vector a = Vector(1, 2, 3, 4, 5);
 
-	a.display();
+    a.display();
 
-	return 0;
+    return 0;
 }

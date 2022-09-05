@@ -1,0 +1,3 @@
+/home/arthur/GitHub/Programmes-C/cmake-build-debug/CMakeFiles/Programmes_C.dir
+/home/arthur/GitHub/Programmes-C/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/arthur/GitHub/Programmes-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
